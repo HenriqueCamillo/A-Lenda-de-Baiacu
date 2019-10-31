@@ -9,12 +9,14 @@ public class Player : MonoBehaviour
     [SerializeField] float impulseForce;
     private Vector3 startPosition;
 
+    [SerializeField] Animator anim;
     /// <summary>
     /// Pega referência do Rigidbody e salva sua posição inicial
     /// </summary>
     void Start()
     {
         rBody = GetComponent<Rigidbody2D>();        
+        anim = GetComponent<Animator>();
         startPosition = this.transform.position;
     }
 
@@ -24,7 +26,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (InflateInputPressed())
+        {
+            anim.Play("Movement", 0);
             Inflate();
+        }
+
     }
 
     /// <summary>
