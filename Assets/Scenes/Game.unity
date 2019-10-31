@@ -147,7 +147,7 @@ Transform:
   m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 407487653}
+  - {fileID: 2079018797}
   - {fileID: 1730494509}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -212,8 +212,8 @@ GameObject:
   - component: {fileID: 196076262}
   - component: {fileID: 196076261}
   - component: {fileID: 196076260}
-  - component: {fileID: 196076264}
   - component: {fileID: 196076265}
+  - component: {fileID: 196076264}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -313,14 +313,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 196076259}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.02, y: 0, z: 0}
+  m_LocalPosition: {x: -0.65, y: -0.44, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &196076264
-CircleCollider2D:
+--- !u!70 &196076264
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -332,9 +332,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.099999994
+  m_Offset: {x: 0.0895946, y: -0.0030018648}
+  m_Size: {x: 0.64230746, y: 0.41377017}
+  m_Direction: 1
 --- !u!95 &196076265
 Animator:
   serializedVersion: 3
@@ -385,7 +385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wall: {fileID: 3384530183938045987, guid: b36cdb3f3498e79468a1a4b9043f34bb, type: 3}
   distanceBetweenWalls: 4
-  limitUp: {fileID: 407487653}
+  limitUp: {fileID: 2079018797}
   limitDown: {fileID: 1730494509}
 --- !u!4 &408771280
 Transform:
@@ -1807,6 +1807,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+--- !u!1 &2079018796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2079018797}
+  m_Layer: 0
+  m_Name: LimitUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2079018797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079018796}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 62144028}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2097105658
 GameObject:
   m_ObjectHideFlags: 0
