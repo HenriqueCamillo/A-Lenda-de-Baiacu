@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rBody;
     [SerializeField] bool automaticMode;
     [SerializeField] float impulseForce;
-    private Vector3 startPosition;
+    private Vector2 startPosition;
 
     /// <summary>
     /// Pega referência do Rigidbody e salva sua posição inicial

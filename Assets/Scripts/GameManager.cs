@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool automaticMode;
     public Player player;
     [SerializeField] Spawner spawner;
+    [SerializeField] Background background;
     [SerializeField] GameObject menu;
 
     /// <summary>
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
     {
         player.Reset();
         spawner.Reset();
+        background.Reset();
         ScoreBoard.instance.Score = 0;
         menu.SetActive(false);
         Time.timeScale = 1f;
