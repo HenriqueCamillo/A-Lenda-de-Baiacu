@@ -5,13 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rBody;
+    private Animator anim;
     [SerializeField] bool automaticMode;
     [SerializeField] float impulseForce;
     private Vector2 startPosition;
 
-    [SerializeField] Animator anim;
+
     /// <summary>
-    /// Pega referência do Rigidbody e salva sua posição inicial
+    /// Pega referência do Rigidbody e do Animator e salva sua posição inicial
     /// </summary>
     void Start()
     {
@@ -26,10 +27,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (!automaticMode && InflateInputPressed())
-        {
-            anim.Play("Movement", 0);
             Inflate();
-        }
 
     }
 
@@ -46,12 +44,14 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Dá um impulso para cima e //TODO ativa animação de inflar.
+    /// Dá um impulso para cima e ativa animação de inflar.
     /// </summary>
     public void Inflate()
     {
         rBody.velocity = Vector3.zero;
         rBody.AddForce(Vector2.up * impulseForce, ForceMode2D.Impulse);
+
+        anim.Play("Movement", 0);
     }
 
     /// <summary>
@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
     public void Reset()
     {
         this.transform.position = startPosition;
+        rBody.velocity = Vector2.zero;
     }
 
 
