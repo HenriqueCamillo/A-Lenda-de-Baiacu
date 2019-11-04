@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (InflateInputPressed())
+        if (!automaticMode && InflateInputPressed())
         {
             anim.Play("Movement", 0);
             Inflate();

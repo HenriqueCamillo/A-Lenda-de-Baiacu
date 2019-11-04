@@ -10,8 +10,8 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-    public void AutomaticMode()
+    public void EvolutiveMode()
     {
-        SceneManager.LoadScene("AutomaticMode");
+        SceneManager.LoadScene("EvolutiveMode");
     }
 }

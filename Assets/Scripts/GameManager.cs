@@ -67,6 +67,6 @@ public class GameManager : MonoBehaviour
 
     void Evolve()
     {
-
+        PlayAgain();
     }
 }

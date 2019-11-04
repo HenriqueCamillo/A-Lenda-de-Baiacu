@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: 18f75d05691c0a240baf951f689bcad3
+  - enabled: 1
+    path: Assets/Scenes/EvolutiveMode.unity
+    guid: 541ce765389dc104c8781e04994a4ca6
   m_configObjects: {}
