@@ -33,9 +33,7 @@ public class Spawner : MonoBehaviour
     /// </summary>
     void SpawnWall()
     {
-        //float height = Random.Range(limitDown.position.y, limitUp.position.y); 
-        float height = limitUp.position.y; 
-        Debug.Log(height);
+        float height = Random.Range(limitDown.position.y, limitUp.position.y); 
         Vector2 position = new Vector2(this.transform.position.x, height);
         GameObject instance = Instantiate(wall, position, Quaternion.identity, this.transform);
         lastWall = instance.transform;
