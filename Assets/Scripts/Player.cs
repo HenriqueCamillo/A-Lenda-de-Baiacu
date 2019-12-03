@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody2D rBody;
-    private Animator anim;
+    [SerializeField] Rigidbody2D rBody;
+    [SerializeField] Animator anim;
+    [SerializeField] WallDetector wallDetector;
     [SerializeField] bool automaticMode;
     [SerializeField] float impulseForce;
-    private Vector2 startPosition;
 
 
     /// <summary>
@@ -16,9 +16,9 @@ public class Player : MonoBehaviour
     /// </summary>
     void Start()
     {
-        rBody = GetComponent<Rigidbody2D>();        
-        anim = GetComponent<Animator>();
-        startPosition = this.transform.position;
+        // rBody = GetComponent<Rigidbody2D>();        
+        // anim = GetComponent<Animator>();
+        // startPosition = this.transform.position;
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Reset()
     {
-        this.transform.position = startPosition;
+        this.transform.position = GameManager.instance.playerStartPosition.position;
         rBody.velocity = Vector2.zero;
     }
 
@@ -70,6 +70,13 @@ public class Player : MonoBehaviour
     /// <param name="_"></param>
     void OnTriggerEnter2D(Collider2D _)
     {
-        GameManager.instance.GameOver();
+        // Se estiver no modo automático, cria uma Ind
+        if (automaticMode)
+        {
+            Transform wall = wallDetector.GetNextWallTransform();
+            // Individual ind = new Individual(wallDetector.minDist, wallDetector.maxDist, this.transform.position, wall.position);
+        }
+        else
+            GameManager.instance.GameOver();
     }
 }

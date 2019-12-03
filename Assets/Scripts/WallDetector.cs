@@ -6,8 +6,8 @@ public class WallDetector : MonoBehaviour
 {
     [SerializeField] Player player;
     [SerializeField] float rayLenght;
-    [SerializeField] float minDist;
-    [SerializeField] float maxDist;
+    public  float minDist;
+    public float maxDist;
     private Wall wall;
     private Distances distances;
 
@@ -55,11 +55,34 @@ public class WallDetector : MonoBehaviour
     {
         Debug.DrawRay(this.transform.position, Vector2.right * rayLenght, Color.green, 0.1f);
 
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right, rayLenght + 10);
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right);
         if (hit != null)
         {
             wall = hit.transform.GetComponent<Wall>();
             distances = wall.GetDistances();
+        }        
+    }
+
+    /// <summary>
+    /// Detecta a parede mais próxima que o baiacu ainda não passouo
+    /// </summary>
+    /// <returns></returns>
+    public Transform GetNextWallTransform()
+    {
+        // Verifica se a refência da parede que temos é a correta, retornando-a, caso verdadeiro
+        if (wall.transform.position.x > this.transform.position.x)
+            return wall.transform;
+        // Caso contrário, usa um raycast para procurar a próxima parede
+        else
+        {
+            Debug.DrawRay(this.transform.position, Vector2.right * rayLenght, Color.green, 0.1f);
+
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right);
+            if (hit != null)
+                return hit.transform;
+            // Caso não tenha enconrado nada no raycast, utiliza a referência da parede já possuída
+            else   
+                return wall.transform;
         }
     }
 }

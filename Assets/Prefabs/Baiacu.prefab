@@ -117,6 +117,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a555a6fa9b348f49a5b0aefcede5fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rBody: {fileID: 8800650541210811240}
+  anim: {fileID: 8800650541210811236}
+  wallDetector: {fileID: 8800650541210811239}
   automaticMode: 1
   impulseForce: 5
 --- !u!114 &8800650541210811239

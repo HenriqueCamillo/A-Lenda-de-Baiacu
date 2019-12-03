@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Spawner spawner;
     [SerializeField] Background background;
     [SerializeField] GameObject menu;
+    public Transform playerStartPosition;
 
     /// <summary>
     /// Singleton
