@@ -44,18 +44,10 @@ public class Wall : MonoBehaviour
     {
         Distances distances = new Distances();
 
-        distances.horizontalDistance = Mathf.Abs(player.transform.position.x - this.transform.position.x);
-        distances.upperWallDistance  = Mathf.Abs(player.transform.position.y - upperWall.transform.position.y);
-        distances.lowerWallDistance  = Mathf.Abs(player.transform.position.y - lowerWall.transform.position.y);
+        distances.horizontalDistance = player.transform.position.x - this.transform.position.x;
+        distances.upperWallDistance  = player.transform.position.y - upperWall.transform.position.y;
+        distances.lowerWallDistance  = player.transform.position.y - lowerWall.transform.position.y;
 
         return distances;
-    }
-
-    /// <summary>
-    /// Destroi parede depois que ela sai da tela
-    /// </summary>
-    void OnBecameInvisible()
-    {
-        Destroy(this.gameObject);
     }
 }
