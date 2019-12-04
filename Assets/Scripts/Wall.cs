@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    private Rigidbody2D rBody;
+    [SerializeField] Rigidbody2D rBody;
     [SerializeField] float speed;
     public bool hasBeenPassed = false;
-    public Transform player;
 
     [SerializeField] GameObject upperWall;
     [SerializeField] GameObject lowerWall;
@@ -18,8 +17,6 @@ public class Wall : MonoBehaviour
     /// </summary>
     void Start()
     {
-        // player = GameManager.instance.player.transform;
-        rBody = GetComponent<Rigidbody2D>();
         rBody.velocity = Vector2.left * speed;
 
     }
