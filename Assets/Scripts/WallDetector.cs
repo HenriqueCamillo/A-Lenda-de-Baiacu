@@ -30,22 +30,33 @@ public class WallDetector : MonoBehaviour
         // Se a parede não for nula
         if (wall != null)
         {
-            distances = wall.GetDistances();
+            if (player.automaticMode)
+            {
+                distances = wall.GetDistances(player.transform);
 
-            // Verifica se ele já está longe o suficiente dos corais para fazer os cálculos para os próximos corais            
-            if (distances.horizontalDistance > maxDist)
+                // Verifica se ele já está longe o suficiente dos corais para fazer os cálculos para os próximos corais            
+                if (distances.horizontalDistance > maxDist)
+                    GetNextWall();
+
+                // Verifica se é necessário inflar o baiacu para ele não cair nos corais
+                if (distances.lowerWallDistance < minDist) 
+                    player.Inflate();
+            }
+            else if (wall.hasBeenPassed)
+            {
                 GetNextWall();
-
-            // Verifica se é necessário inflar o baiacu para ele não cair nos corais
-            if (distances.lowerWallDistance < minDist) 
-                player.Inflate();
-                
+            }
         }
         // Caso a parede seja nula, pega referência da próxima parede
         else
             GetNextWall();
 
-        
+        // Gera a pontuação ao passar por uma parede
+        if (!wall.hasBeenPassed && this.transform.position.x > wall.transform.position.x)
+        {
+            wall.hasBeenPassed = true;
+            ScoreBoard.instance.Score++;
+        }   
     }
 
     /// <summary>
@@ -59,7 +70,7 @@ public class WallDetector : MonoBehaviour
         if (hit)
         {
             wall = hit.transform.GetComponent<Wall>();
-            distances = wall.GetDistances();
+            distances = wall.GetDistances(player.transform);
         }        
     }
 

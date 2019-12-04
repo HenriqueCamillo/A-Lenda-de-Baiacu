@@ -6,7 +6,7 @@ public class Wall : MonoBehaviour
 {
     private Rigidbody2D rBody;
     [SerializeField] float speed;
-    private bool hasBeenPassed = false;
+    public bool hasBeenPassed = false;
     public Transform player;
 
     [SerializeField] GameObject upperWall;
@@ -18,7 +18,7 @@ public class Wall : MonoBehaviour
     /// </summary>
     void Start()
     {
-        player = GameManager.instance.player.transform;
+        // player = GameManager.instance.player.transform;
         rBody = GetComponent<Rigidbody2D>();
         rBody.velocity = Vector2.left * speed;
 
@@ -29,24 +29,20 @@ public class Wall : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!hasBeenPassed && player.transform.position.x > this.transform.position.x)
-        {
-            hasBeenPassed = true;
-            ScoreBoard.instance.Score++;
-        }
+       
     }
 
     /// <summary>
     /// Calcula as distâncias da parede para o player e retorna
     /// </summary>
     /// <returns>Distâncias da parede para o player</returns>
-    public Distances GetDistances()
+    public Distances GetDistances(Transform player)
     {
         Distances distances = new Distances();
 
-        distances.horizontalDistance = player.transform.position.x - this.transform.position.x;
-        distances.upperWallDistance  = player.transform.position.y - upperWall.transform.position.y;
-        distances.lowerWallDistance  = player.transform.position.y - lowerWall.transform.position.y;
+        distances.horizontalDistance = player.position.x - this.transform.position.x;
+        distances.upperWallDistance  = player.position.y - upperWall.transform.position.y;
+        distances.lowerWallDistance  = player.position.y - lowerWall.transform.position.y;
 
         return distances;
     }

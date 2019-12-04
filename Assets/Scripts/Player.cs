@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody2D rBody;
     [SerializeField] Animator anim;
     [SerializeField] WallDetector wallDetector;
-    [SerializeField] bool automaticMode;
+    public bool automaticMode;
     [SerializeField] float impulseForce;
     private int index;
 
@@ -78,10 +78,12 @@ public class Player : MonoBehaviour
     /// <param name="_"></param>
     void OnTriggerEnter2D(Collider2D _)
     {
+        //TODO layer do player não colidir ela mesma
         // Se estiver no modo automático, cria uma Ind
         if (automaticMode)
         {
             Transform wall = wallDetector.GetNextWallTransform();
+            Time.timeScale = 0; //!
             // Individual ind = new Individual(wallDetector.minDist, wallDetector.maxDist, this.transform.position, wall.position);
         }
         else
