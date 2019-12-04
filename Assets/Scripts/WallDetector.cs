@@ -56,7 +56,7 @@ public class WallDetector : MonoBehaviour
         Debug.DrawRay(this.transform.position, Vector2.right * rayLenght, Color.green, 0.1f);
 
         RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right);
-        if (hit != null)
+        if (hit)
         {
             wall = hit.transform.GetComponent<Wall>();
             distances = wall.GetDistances();
@@ -78,7 +78,7 @@ public class WallDetector : MonoBehaviour
             Debug.DrawRay(this.transform.position, Vector2.right * rayLenght, Color.green, 0.1f);
 
             RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.right);
-            if (hit != null)
+            if (hit)
                 return hit.transform;
             // Caso não tenha enconrado nada no raycast, utiliza a referência da parede já possuída
             else   

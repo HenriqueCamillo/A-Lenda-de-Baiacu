@@ -16,18 +16,22 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] float mutationRate = 0.05f; 
 
     //quantidade de gerações
-    [SerializeField] int generation;
+    [SerializeField] int generation = 0;
 
     //valores iniciais [min, max] para minDist e maxDist
     [SerializeField] float[] minDistRange = {0f, 5f};
     [SerializeField] float[] maxDistRange = {0f, 5f};
 
+    [SerializeField] GameObject playerPrefab;
+
+
     //lista da população
-    public List<Individual> population = new List<Individual>();
+    private List<Individual> population = new List<Individual>();
     public static PopulationManager instance;
   
     /// <summary>
     /// Singleton
+    /// Cria primeira geração
     /// </summary>
     void Awake()
     {
@@ -35,6 +39,8 @@ public class PopulationManager : MonoBehaviour
             instance = this;
         else if(instance != this)
             Destroy(this.gameObject);
+
+        CreateNewGeneration();
     }
 
     /// <summary>
@@ -164,6 +170,56 @@ public class PopulationManager : MonoBehaviour
             population = selectedPop.Concat(descendants).ToList();
 
         }
-            generation++;
+        
+        generation++;
+    }
+
+    /// <summary>
+    /// Atualiza o fitnesse de um inidivíduo dado seu index e seu novo fitness
+    /// </summary>
+    /// <param name="index">Index do indivíduo na lista</param>
+    /// <param name="fitness">Novo fitness</param>
+    public void UpdateFitness(int index, float fitness)
+    {
+        population[index].fitness = fitness;
+        RegisterResults();
+    }
+
+    /// <summary>
+    /// Registra o desempenho do indivíduo
+    /// </summary>
+    void RegisterResults()
+    {
+
+    }
+
+    /// <summary>
+    /// Registra a população antes de ela jogar
+    /// </summary>
+    void RegisterPopulation()
+    {
+
+    }
+
+    /// <summary>
+    /// Gera nova população, registra-a, e spawna os indivíduos para testá-los
+    /// </summary>
+    void CreateNewGeneration()
+    {
+        Generator();
+        RegisterPopulation();
+        SpawnPopulation();
+    }
+
+    /// <summary>
+    /// Spawna a população inteira
+    /// </summary>
+    void SpawnPopulation()
+    {
+        for (int i = 0; i < population.Count; i++)
+        {
+            GameObject player = Instantiate(playerPrefab, GameManager.instance.playerStartPosition.position, Quaternion.identity);
+            player.GetComponent<Player>().Initialize(i, population[i].minDist, population[i].maxDist);
+        }
     }
 }

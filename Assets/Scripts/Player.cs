@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] WallDetector wallDetector;
     [SerializeField] bool automaticMode;
     [SerializeField] float impulseForce;
+    private int index;
 
 
     /// <summary>
@@ -19,6 +20,13 @@ public class Player : MonoBehaviour
         // rBody = GetComponent<Rigidbody2D>();        
         // anim = GetComponent<Animator>();
         // startPosition = this.transform.position;
+    }
+
+
+    public void Initialize(int index, float minDist, float maxDist)
+    {
+        this.index = index;
+        wallDetector.SetGenes(minDist, maxDist);
     }
 
     /// <summary>
