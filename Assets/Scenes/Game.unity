@@ -240,6 +240,7 @@ MonoBehaviour:
   wallDetector: {fileID: 0}
   automaticMode: 0
   impulseForce: 5
+  score: 0
 --- !u!50 &196076261
 Rigidbody2D:
   serializedVersion: 4
@@ -2149,9 +2150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb28c8e9d4b6a114c95879378cfe671d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rBody: {fileID: 2072582174943921656}
   speed: 0
   hasBeenPassed: 0
-  player: {fileID: 0}
   upperWall: {fileID: 0}
   lowerWall: {fileID: 0}
 --- !u!50 &2072582174943921656

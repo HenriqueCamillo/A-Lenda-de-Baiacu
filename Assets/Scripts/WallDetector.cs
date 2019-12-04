@@ -42,10 +42,6 @@ public class WallDetector : MonoBehaviour
                 if (distances.lowerWallDistance < minDist) 
                     player.Inflate();
             }
-            else if (wall.hasBeenPassed)
-            {
-                GetNextWall();
-            }
         }
         // Caso a parede seja nula, pega referência da próxima parede
         else
@@ -56,6 +52,7 @@ public class WallDetector : MonoBehaviour
         {
             wall.hasBeenPassed = true;
             ScoreBoard.instance.Score = ++player.score;
+            GetNextWall();
         }   
     }
 

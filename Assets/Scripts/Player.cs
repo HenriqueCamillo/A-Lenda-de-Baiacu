@@ -82,10 +82,12 @@ public class Player : MonoBehaviour
         // Se estiver no modo automático, cria uma Ind
         if (automaticMode)
         {
+            score = ScoreBoard.instance.Score;  
             Transform wall = wallDetector.GetNextWallTransform();
-            Debug.Log("index " + index + ": " + score );
+            float fitness = Individual.Fitness(score, this.transform.position, wall.position);
+            PopulationManager.instance.UpdateFitness(index, score, fitness);
+
             Destroy(this.gameObject);
-            // Individual ind = new Individual(wallDetector.minDist, wallDetector.maxDist, this.transform.position, wall.position);
         }
         else
             GameManager.instance.GameOver();

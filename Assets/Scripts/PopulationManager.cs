@@ -10,19 +10,23 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] int popSize;
 
     //taxa para ocorrer o crossover
-    [SerializeField] float crossoverRate = 0.8f;
+    [SerializeField] float crossoverRate;
     
     //taxa para ocorrer a mutação
-    [SerializeField] float mutationRate = 0.05f; 
+    [SerializeField] float mutationRate; 
+    [SerializeField] float[] mutationRange;
 
     //quantidade de gerações
     [SerializeField] int generation = 0;
 
     //valores iniciais [min, max] para minDist e maxDist
-    [SerializeField] float[] minDistRange = {0f, 5f};
-    [SerializeField] float[] maxDistRange = {0f, 5f};
+    [SerializeField] float[] minDistRange;
+    [SerializeField] float[] maxDistRange;
+    [SerializeField] float timeScale;
+
 
     [SerializeField] GameObject playerPrefab;
+    private int playingPlayers;
 
 
     //lista da população
@@ -40,7 +44,10 @@ public class PopulationManager : MonoBehaviour
         else if(instance != this)
             Destroy(this.gameObject);
 
-        CreateNewGeneration();
+        if (timeScale != 0)
+            Time.timeScale = timeScale;
+
+        CreateNewGeneration();        
     }
 
     /// <summary>
@@ -50,21 +57,30 @@ public class PopulationManager : MonoBehaviour
     List<Individual> Selection()
     {
         List<Individual> newPop = new List<Individual>();
+        
+        //ordena a lista em ordem decrescente de fitness
+        List<Individual> pop = population;
+        pop.Sort((ind1,ind2)=> -1 * ind1.fitness.CompareTo(ind2.fitness));
 
         //calcula a média dos fitness
         float averageFitness =  population.Average(ind=>ind.fitness);
 
         //pega os indivíduos que tem fitness maior ou igual
-        foreach(Individual ind in population)
+        for(int i = 0; i < pop.Count; i++)
         {
-            if(ind.fitness >= averageFitness)
-            {
-                newPop.Add(ind);
-            }
+            // O mínimo de índividuos da nova popoulação é 2, para que seja possível
+            // fazer o crossover, então os dois primeiros indivíduos são selecionados
+            if (i < 2)
+                newPop.Add(pop[i]);
+            // Seleciona no máximo dois terços da população atual
+            else if (newPop.Count >= (float)pop.Count * 2f/3f)
+                break;
+            else if(pop[i].fitness >= averageFitness)
+                newPop.Add(pop[i]);
+            else
+                break;
         }
-
-        //ordena a lista em ordem decrescente de fitness
-        newPop.Sort((ind1,ind2)=> -1 * ind1.fitness.CompareTo(ind2.fitness));
+        Debug.Log(newPop.Count);
 
         return newPop;
     }
@@ -105,17 +121,20 @@ public class PopulationManager : MonoBehaviour
                     ind1.maxDist = selectedPop[index2].maxDist;
                     descendants.Add(ind1);
 
-                    Individual ind2 = new Individual();
+                    if (descendants.Count < popSize - selectedPop.Count)
+                    {
+                        Individual ind2 = new Individual();
 
-                    ind2.minDist = selectedPop[index2].minDist;
-                    ind2.maxDist = selectedPop[index1].maxDist;
-                    descendants.Add(ind2);
+                        ind2.minDist = selectedPop[index2].minDist;
+                        ind2.maxDist = selectedPop[index1].maxDist;
+                        descendants.Add(ind2);
+                    }
 
                 }
             }
 
         }
-        
+
         return descendants;
     }
 
@@ -130,11 +149,12 @@ public class PopulationManager : MonoBehaviour
             //se puder ocorrer mutação
             if(Random.Range(0f, 1f) < mutationRate)
             {
+                Debug.Log("X-Men");
                 //decido se vai ocorrer mutação no gene do minDist ou no gene do maxDist
                 if(Random.Range(0, 2) == 0)
-                    descendants[i].minDist += Random.Range(-0.25f, 0.25f);
+                    descendants[i].minDist += Random.Range(mutationRange[0], mutationRange[1]);
                 else
-                    descendants[i].maxDist += Random.Range(-0.25f, 0.25f);
+                    descendants[i].maxDist += Random.Range(mutationRange[0], mutationRange[1]);
             }
         }
     }
@@ -179,18 +199,22 @@ public class PopulationManager : MonoBehaviour
     /// </summary>
     /// <param name="index">Index do indivíduo na lista</param>
     /// <param name="fitness">Novo fitness</param>
-    public void UpdateFitness(int index, float fitness)
+    public void UpdateFitness(int index, int score, float fitness)
     {
         population[index].fitness = fitness;
-        RegisterResults();
+        RegisterResults(index, score, fitness);
+        playingPlayers--;
+
+        if (playingPlayers == 0)
+            CreateNewGeneration();
     }
 
     /// <summary>
     /// Registra o desempenho do indivíduo
     /// </summary>
-    void RegisterResults()
+    void RegisterResults(int index, int score, float fitness)
     {
-
+        // Debug.Log("Score: " + score + "\nFitness: " + fitness + "\nGenes: " + population[index].minDist + " " + population[index].maxDist);
     }
 
     /// <summary>
@@ -206,6 +230,8 @@ public class PopulationManager : MonoBehaviour
     /// </summary>
     void CreateNewGeneration()
     {
+        if (generation > 0)
+            GameManager.instance.GameOver();
         Generator();
         RegisterPopulation();
         SpawnPopulation();
@@ -216,6 +242,7 @@ public class PopulationManager : MonoBehaviour
     /// </summary>
     void SpawnPopulation()
     {
+        playingPlayers = popSize;
         for (int i = 0; i < population.Count; i++)
         {
             GameObject player = Instantiate(playerPrefab, GameManager.instance.playerStartPosition.position, Quaternion.identity);

@@ -1604,16 +1604,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca487774db2e6249a8df1d253887c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popSize: 5
+  popSize: 25
   crossoverRate: 0.8
-  mutationRate: 0.05
+  mutationRate: 0.3
+  mutationRange:
+  - -2
+  - 2
   generation: 0
   minDistRange:
-  - 0
+  - -5
   - 5
   maxDistRange:
-  - 0
+  - -2
   - 5
+  timeScale: 2
   playerPrefab: {fileID: 8800650541210811246, guid: d6354af91ef61934ea2948b405991d63,
     type: 3}
 --- !u!4 &1913831456
@@ -2031,7 +2035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb28c8e9d4b6a114c95879378cfe671d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rBody: {fileID: 0}
+  rBody: {fileID: 2072582174943921656}
   speed: 0
   hasBeenPassed: 0
   upperWall: {fileID: 0}

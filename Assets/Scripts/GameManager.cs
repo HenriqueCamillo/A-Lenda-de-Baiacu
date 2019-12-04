@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         if (automaticMode)
-            Evolve();
+            Reset();
         else
             StopAndShowMenu();
     }
@@ -52,9 +52,16 @@ public class GameManager : MonoBehaviour
         player.Reset();
         spawner.Reset();
         background.Reset();
-        ScoreBoard.instance.Score = 0;
+        ScoreBoard.instance.Reset();
         menu.SetActive(false);
         Time.timeScale = 1f;
+    }
+
+    void Reset()
+    {
+        spawner.Reset();
+        background.Reset();
+        ScoreBoard.instance.Reset();
     }
 
     /// <summary>

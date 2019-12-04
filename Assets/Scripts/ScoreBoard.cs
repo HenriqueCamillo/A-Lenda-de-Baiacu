@@ -32,6 +32,10 @@ public class ScoreBoard : MonoBehaviour
         else if (instance != this)
             Destroy(this.gameObject);
 
+    }
+
+    public void Reset()
+    {
         score = 0;
         scoreText.text = score.ToString();
     }
