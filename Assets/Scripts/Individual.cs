@@ -12,16 +12,11 @@ public class Individual
     public float fitness;
 
     //valor para normalizar a distancia
-    private float normie = 10f;
+    private static float normalizer = 10f;
 
-    public Individual(){}
-    public Individual(float minDist, float maxDist, int score, Vector2 finalPos, Vector2 wallPos)
+    public static float Fitness(float score, Vector2 finalPos, Vector2 wallPos)
     {
-        this.minDist = minDist;
-        this.maxDist = maxDist;
-
-        //cálculo do fitness do indivíduo
-        fitness = score + (1 - Vector2.Distance(finalPos, wallPos) / normie);        
+        return score + (1 - Vector2.Distance(finalPos, wallPos) / normalizer);        
     }
 
 
