@@ -80,7 +80,6 @@ public class PopulationManager : MonoBehaviour
             else
                 break;
         }
-        Debug.Log(newPop.Count);
 
         return newPop;
     }
@@ -149,7 +148,6 @@ public class PopulationManager : MonoBehaviour
             //se puder ocorrer mutação
             if(Random.Range(0f, 1f) < mutationRate)
             {
-                Debug.Log("X-Men");
                 //decido se vai ocorrer mutação no gene do minDist ou no gene do maxDist
                 if(Random.Range(0, 2) == 0)
                     descendants[i].minDist += Random.Range(mutationRange[0], mutationRange[1]);
@@ -206,7 +204,10 @@ public class PopulationManager : MonoBehaviour
         playingPlayers--;
 
         if (playingPlayers == 0)
+        {
+            Debug.Log("Gen " + generation + " max score: " + score);
             CreateNewGeneration();
+        }
     }
 
     /// <summary>

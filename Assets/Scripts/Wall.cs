@@ -6,7 +6,7 @@ public class Wall : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rBody;
     [SerializeField] float speed;
-    public bool hasBeenPassed = false;
+    private bool hasBeenPassed = false;
 
     [SerializeField] GameObject upperWall;
     [SerializeField] GameObject lowerWall;
@@ -26,6 +26,12 @@ public class Wall : MonoBehaviour
     /// </summary>
     void Update()
     {
+        // Gera a pontuação ao passar por uma parede
+        if (!hasBeenPassed && GameManager.instance.scoreDetector.position.x > this.transform.position.x)
+        {
+            hasBeenPassed = true;
+            ScoreBoard.instance.Score++;
+        }   
        
     }
 

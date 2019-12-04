@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Background background;
     [SerializeField] GameObject menu;
     public Transform playerStartPosition;
+    public Transform scoreDetector;
 
     /// <summary>
     /// Singleton
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
         player.Reset();
         spawner.Reset();
         background.Reset();
-        ScoreBoard.instance.Reset();
+        ScoreBoard.instance.Score = 0;
         menu.SetActive(false);
         Time.timeScale = 1f;
     }
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
     {
         spawner.Reset();
         background.Reset();
-        ScoreBoard.instance.Reset();
+        ScoreBoard.instance.Score = 0;
     }
 
     /// <summary>

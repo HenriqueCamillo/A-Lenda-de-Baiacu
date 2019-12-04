@@ -46,14 +46,6 @@ public class WallDetector : MonoBehaviour
         // Caso a parede seja nula, pega referência da próxima parede
         else
             GetNextWall();
-
-        // Gera a pontuação ao passar por uma parede
-        if (!wall.hasBeenPassed && this.transform.position.x > wall.transform.position.x)
-        {
-            wall.hasBeenPassed = true;
-            ScoreBoard.instance.Score = ++player.score;
-            GetNextWall();
-        }   
     }
 
     /// <summary>
