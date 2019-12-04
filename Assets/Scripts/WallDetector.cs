@@ -55,7 +55,7 @@ public class WallDetector : MonoBehaviour
         if (!wall.hasBeenPassed && this.transform.position.x > wall.transform.position.x)
         {
             wall.hasBeenPassed = true;
-            ScoreBoard.instance.Score++;
+            ScoreBoard.instance.Score = ++player.score;
         }   
     }
 

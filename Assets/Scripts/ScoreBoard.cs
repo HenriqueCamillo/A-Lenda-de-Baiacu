@@ -14,8 +14,11 @@ public class ScoreBoard : MonoBehaviour
         get => score;
         set
         {
-            score = value;
-            scoreText.text = score.ToString();
+            if (value > score)
+            {
+                score = value;
+                scoreText.text = score.ToString();
+            }
         }
     }
 
@@ -29,7 +32,8 @@ public class ScoreBoard : MonoBehaviour
         else if (instance != this)
             Destroy(this.gameObject);
 
-        Score = 0;
+        score = 0;
+        scoreText.text = score.ToString();
     }
 
 }

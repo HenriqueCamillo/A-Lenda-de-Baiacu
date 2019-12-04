@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public bool automaticMode;
     [SerializeField] float impulseForce;
     private int index;
+    public int score = 0;
 
 
     /// <summary>
@@ -78,12 +79,12 @@ public class Player : MonoBehaviour
     /// <param name="_"></param>
     void OnTriggerEnter2D(Collider2D _)
     {
-        //TODO layer do player não colidir ela mesma
         // Se estiver no modo automático, cria uma Ind
         if (automaticMode)
         {
             Transform wall = wallDetector.GetNextWallTransform();
-            Time.timeScale = 0; //!
+            Debug.Log("index " + index + ": " + score );
+            Destroy(this.gameObject);
             // Individual ind = new Individual(wallDetector.minDist, wallDetector.maxDist, this.transform.position, wall.position);
         }
         else
