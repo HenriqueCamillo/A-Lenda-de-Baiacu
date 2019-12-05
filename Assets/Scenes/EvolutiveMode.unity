@@ -1661,19 +1661,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca487774db2e6249a8df1d253887c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popSize: 50
+  popSize: 10
   crossoverRate: 0.8
   mutationRate: 0.8
   mutationRange:
-  - -2
-  - 2
+  - -0.5
+  - 0.5
   minDistRange:
   - -5
   - 5
   maxDistRange:
   - -2
-  - 5
-  timeScale: 0
+  - 2
+  timeScale: 1
   playerPrefab: {fileID: 8800650541210811246, guid: d6354af91ef61934ea2948b405991d63,
     type: 3}
   generation: 0

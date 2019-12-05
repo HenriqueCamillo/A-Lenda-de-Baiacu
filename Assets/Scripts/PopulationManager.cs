@@ -22,13 +22,12 @@ public class PopulationManager : MonoBehaviour
     //valores iniciais [min, max] para minDist e maxDist
     [SerializeField] float[] minDistRange;
     [SerializeField] float[] maxDistRange;
-    [Tooltip("Use esta variável para deixar os testes mais rápidos, mas isso pode alterar a física do jogo")]
+    [Tooltip("Use esta variável para deixar os testes mais rápidos")]
     [SerializeField] float timeScale;
 
     [Tooltip("Prefab do peixe já no modo automático")]
     [SerializeField] GameObject playerPrefab;
     // Quantidade de indivíduos jogando no momento
-    private int playingPlayers;
 
 
     //lista da população
@@ -214,8 +213,21 @@ public class PopulationManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Quando todos os peixes perdem o jogo, uma nova geração é gerada
+    /// Verificação a todo frame pois o uso de uma variável de contagem gera bugs quando vários peixes morrem junto
+    /// </summary>
+    void Update()
+    {
+        if (this.transform.childCount == 0)
+        {
+            Debug.Log("Gen " + generation + " max score: " + ScoreBoard.instance.Score);
+            CreateNewGeneration();
+        }
+
+    }
+
+    /// <summary>
     /// Atualiza o fitnesse de um inidivíduo dado seu index e seu novo fitness
-    /// Caso não haja mais nenhum indivíduo jogando, cira nova geração
     /// </summary>
     /// <param name="index">Index do indivíduo na lista</param>
     /// <param name="fitness">Novo fitness</param>
@@ -223,16 +235,6 @@ public class PopulationManager : MonoBehaviour
     {
         population[index].fitness = fitness;
         RegisterResults(index, score, fitness);
-
-        // Como essa função é chamada quando um indivíduo perde o jogo, a quantidade de indivíduos é decrementada
-        playingPlayers--;
-
-        // Quando todos os peixes perdem o jogo, uma nova geração é gerada
-        if (playingPlayers == 0)
-        {
-            // Debug.Log("Gen " + generation + " max score: " + score);
-            CreateNewGeneration();
-        }
     }
 
     /// <summary>
@@ -269,10 +271,9 @@ public class PopulationManager : MonoBehaviour
     /// </summary>
     void SpawnPopulation()
     {
-        playingPlayers = popSize;
         for (int i = 0; i < population.Count; i++)
         {
-            GameObject player = Instantiate(playerPrefab, GameManager.instance.playerStartPosition.position, Quaternion.identity);
+            GameObject player = Instantiate(playerPrefab, GameManager.instance.playerStartPosition.position, Quaternion.identity, this.transform);
             player.GetComponent<Player>().Initialize(i, population[i].minDist, population[i].maxDist);
         }
     }
