@@ -9,6 +9,10 @@ public class ScoreBoard : MonoBehaviour
     public static ScoreBoard instance;
     private int score;
 
+    /// <summary>
+    /// Ao atualizar a pontuação, atualiza a UI também
+    /// </summary>
+    /// <returns></returns>
     public int Score
     {
         get => score;

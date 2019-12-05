@@ -13,21 +13,19 @@ public class Wall : MonoBehaviour
 
 
     /// <summary>
-    /// Pega referência do jogador e do rigidbody, e inicia seu movimento para a esquerda
+    /// Inicia seu movimento para a esquerda
     /// </summary>
     void Start()
     {
         rBody.velocity = Vector2.left * speed;
-
     }
 
     /// <summary>
-    /// Verifica se o player passou pela parede, contabilizando um ponto caso tenha.
+    /// Verifica se o player passou pela parede, contabilizando um ponto caso tenha passado.
     /// </summary>
     void Update()
     {
-        // Gera a pontuação ao passar por uma parede
-        if (!hasBeenPassed && GameManager.instance.scoreDetector.position.x > this.transform.position.x)
+        if (!hasBeenPassed && GameManager.instance.playerStartPosition.position.x > this.transform.position.x)
         {
             hasBeenPassed = true;
             ScoreBoard.instance.Score++;

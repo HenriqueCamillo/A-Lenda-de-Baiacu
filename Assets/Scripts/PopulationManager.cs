@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PopulationManager : MonoBehaviour
 {
@@ -16,16 +18,16 @@ public class PopulationManager : MonoBehaviour
     [SerializeField] float mutationRate; 
     [SerializeField] float[] mutationRange;
 
-    //quantidade de gerações
-    [SerializeField] int generation = 0;
 
     //valores iniciais [min, max] para minDist e maxDist
     [SerializeField] float[] minDistRange;
     [SerializeField] float[] maxDistRange;
+    [Tooltip("Use esta variável para deixar os testes mais rápidos, mas isso pode alterar a física do jogo")]
     [SerializeField] float timeScale;
 
-
+    [Tooltip("Prefab do peixe já no modo automático")]
     [SerializeField] GameObject playerPrefab;
+    // Quantidade de indivíduos jogando no momento
     private int playingPlayers;
 
 
@@ -33,6 +35,25 @@ public class PopulationManager : MonoBehaviour
     private List<Individual> population = new List<Individual>();
     public static PopulationManager instance;
   
+    //quantidade de gerações
+    [SerializeField] int generation = 0;
+    [SerializeField] TextMeshProUGUI generationText;
+
+    /// <summary>
+    /// Ao atualizar a geração, atualiza a UI também
+    /// </summary>
+    /// <returns></returns>
+    private int Generation
+    {
+        get => generation;
+        set
+        {
+            generation = value;
+            generationText.text = "Geração " + generation.ToString();
+
+        }
+    }
+
     /// <summary>
     /// Singleton
     /// Cria primeira geração
@@ -189,11 +210,12 @@ public class PopulationManager : MonoBehaviour
 
         }
         
-        generation++;
+        Generation++;
     }
 
     /// <summary>
     /// Atualiza o fitnesse de um inidivíduo dado seu index e seu novo fitness
+    /// Caso não haja mais nenhum indivíduo jogando, cira nova geração
     /// </summary>
     /// <param name="index">Index do indivíduo na lista</param>
     /// <param name="fitness">Novo fitness</param>
@@ -201,11 +223,14 @@ public class PopulationManager : MonoBehaviour
     {
         population[index].fitness = fitness;
         RegisterResults(index, score, fitness);
+
+        // Como essa função é chamada quando um indivíduo perde o jogo, a quantidade de indivíduos é decrementada
         playingPlayers--;
 
+        // Quando todos os peixes perdem o jogo, uma nova geração é gerada
         if (playingPlayers == 0)
         {
-            Debug.Log("Gen " + generation + " max score: " + score);
+            // Debug.Log("Gen " + generation + " max score: " + score);
             CreateNewGeneration();
         }
     }
@@ -215,6 +240,7 @@ public class PopulationManager : MonoBehaviour
     /// </summary>
     void RegisterResults(int index, int score, float fitness)
     {
+        //TODO implementar registro dos indivíduos
         // Debug.Log("Score: " + score + "\nFitness: " + fitness + "\nGenes: " + population[index].minDist + " " + population[index].maxDist);
     }
 
@@ -223,7 +249,7 @@ public class PopulationManager : MonoBehaviour
     /// </summary>
     void RegisterPopulation()
     {
-
+        //TODO implementar registro das populações
     }
 
     /// <summary>
@@ -249,5 +275,14 @@ public class PopulationManager : MonoBehaviour
             GameObject player = Instantiate(playerPrefab, GameManager.instance.playerStartPosition.position, Quaternion.identity);
             player.GetComponent<Player>().Initialize(i, population[i].minDist, population[i].maxDist);
         }
+    }
+
+    /// <summary>
+    /// Volta ao menu
+    /// //TODO salvar os resultados dos que ainda estão em jogo
+    /// </summary>
+    public void Exit()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }

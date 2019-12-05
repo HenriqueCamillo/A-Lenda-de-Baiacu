@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // Referências de componentes do player
     [SerializeField] Rigidbody2D rBody;
     [SerializeField] Animator anim;
     [SerializeField] WallDetector wallDetector;
+
+    // Variável que define o comportamento automático ou manual do peixe
     public bool automaticMode;
+    [Tooltip("Força do impulso dado ao inflaro o peixe")]
     [SerializeField] float impulseForce;
+
+    // Index na lista da população, usado no modo evolutivo
     private int index;
     public int score = 0;
 
-
     /// <summary>
-    /// Pega referência do Rigidbody e do Animator e salva sua posição inicial
+    /// Inicializa o peixe com seus genes e seu index na lista da população
     /// </summary>
-    void Start()
-    {
-        // rBody = GetComponent<Rigidbody2D>();        
-        // anim = GetComponent<Animator>();
-        // startPosition = this.transform.position;
-    }
-
-
+    /// <param name="index">Index na lista da população</param>
+    /// <param name="minDist">Gene 1</param>
+    /// <param name="maxDist">Gene 2</param>
     public void Initialize(int index, float minDist, float maxDist)
     {
         this.index = index;
@@ -37,7 +37,6 @@ public class Player : MonoBehaviour
     {
         if (!automaticMode && InflateInputPressed())
             Inflate();
-
     }
 
     /// <summary>
@@ -79,7 +78,7 @@ public class Player : MonoBehaviour
     /// <param name="_"></param>
     void OnTriggerEnter2D(Collider2D _)
     {
-        // Se estiver no modo automático, cria uma Ind
+        // Se estiver no modo automático, cria calcula seu fitness e envia para o Population Manager
         if (automaticMode)
         {
             score = ScoreBoard.instance.Score;  
